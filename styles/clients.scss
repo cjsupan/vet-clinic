@@ -1,0 +1,66 @@
+@import "./mixins";
+@import "./variables";
+
+.clientTable {
+  width: 100%;
+  height: 70vh;
+  box-shadow: $boxShadow;
+  background-color: white;
+  border-radius: 5px;
+
+  .mantine-ScrollArea-scrollbar {
+    background-color: transparent;
+
+    .mantine-ScrollArea-thumb {
+      margin-top: 35px;
+    }
+  }
+
+  .thead {
+    top: 0;
+    position: sticky;
+    background-color: $color-blue;
+
+    th {
+      color: white;
+
+      &.firstname {
+        width: 20%;
+      }
+      &.lastname {
+        width: 20%;
+      }
+      &.email {
+        width: 20%;
+      }
+      &.contact {
+        width: 20%;
+      }
+      &.status {
+        width: 10%;
+      }
+      &.actions {
+        width: 15%;
+        padding-right: 30px;
+      }
+    }
+  }
+
+  .tbody {
+    .table-items {
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      &.status {
+        @include row;
+      }
+      &.actions {
+        @include row;
+        justify-content: center;
+        gap: 10px;
+        width: 7vw;
+        padding-right: 10px;
+      }
+    }
+  }
+}

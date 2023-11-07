@@ -1,0 +1,21 @@
+//Screens
+$xl: 87.5em; // 4k and hi-res desktop
+$lg: 60em; // 1080 and hi-res laptops
+$med: 40em; // hi-res tablets and low-res laptops
+$sm: 28em; // mobile and low-res tablets
+$xs: 20em; // mobile only
+
+$primary-bg-image: url("../public/Cloudy.svg");
+
+//Colors
+$primary-bg: #1b1d2a;
+$color-blue: #356cb1;
+$color-gray: #4b5563;
+$color-red: #d44949;
+$color-smokeyWhite: #d9d9d9;
+
+//texts
+$font-Oswald: "Oswald";
+
+$boxShadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+  rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;

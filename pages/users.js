@@ -1,36 +1,32 @@
 import Head from "next/head";
-import { useEffect, useMemo } from "react";
-import { useSession, getSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import { useMemo, useEffect } from "react";
+import { getSession } from "next-auth/react";
 import { useSelector, useDispatch } from "react-redux";
-import { isEqual, sortBy } from "lodash";
-import { Text, ScrollArea, Button, Table } from "@mantine/core";
+import { Text, ScrollArea, Table, Button } from "@mantine/core";
 import { Popconfirm } from "antd";
 import { Edit, Trash, Eye, CheckCircle, XCircle } from "react-feather";
 import "antd/dist/antd.css";
-
+import { isEqual, sortBy } from "lodash";
 import {
-  fetch as fetchClients,
-  search,
-  toggle as toggleClients,
-  setSelected as setSelectedClients,
-  deleted as deleteClients,
-  setSelected,
-} from "../store/slices/clientSlice";
-import AddClientModal from "../components/modals/clients/addClient";
-import ViewClientModal from "../components/modals/clients/viewClient";
-import EditClientModal from "../components/modals/clients/editClient";
+  fetch as fetchUsers,
+  toggle,
+  setSelected as setSelectedUser,
+  deleted as deleteUser,
+} from "../store/slices/userSlice";
+import AddUserModal from "../components/modals/users/addUser";
+import ViewUserModal from "../components/modals/users/viewUser";
+import EditUserModal from "../components/modals/users/editUser";
 
-const Clients = () => {
+const Users = () => {
   const dispatch = useDispatch();
 
-  const { data: clients, loading: clientsLoading } = useSelector(
-    (state) => state.client,
+  const { data: users, loading: usersLoading } = useSelector(
+    (state) => state.user,
     isEqual
   );
 
-  const clientItems = useMemo(() => {
-    const data = clients;
+  const userItems = useMemo(() => {
+    const data = users;
 
     if (data)
       return sortBy(
@@ -38,58 +34,43 @@ const Clients = () => {
           return {
             firstname: d.Firstname,
             lastname: d.Lastname,
-            email: d.Email,
-            contact: d.Contact,
-            address: d.Address,
+            Email: d.Email,
+            Role: d.Role,
             status: d.Active,
             id: d._id,
           };
         })
       );
     else return [];
-  }, [JSON.stringify(clients)]);
+  }, [JSON.stringify(users)]);
 
   const handleAdd = () => {
-    dispatch(toggleClients({ modalAdd: true }));
+    dispatch(toggle({ modalAdd: true }));
   };
 
-  const handleView = (id) => {
-    const selectedClient = clientItems.find((d) => d.id === id);
-    dispatch(setSelected(selectedClient));
-    dispatch(toggleClients({ modalView: true }));
+  const handleView = async (Id) => {
+    const data = await users.find((d) => d._id === Id);
+
+    await dispatch(setSelectedUser(data));
+    dispatch(toggle({ modalView: true }));
   };
 
-  const handleEdit = (id) => {
-    const selectedClient = clientItems.find((d) => d.id === id);
-    dispatch(setSelected(selectedClient));
-    dispatch(toggleClients({ modalEdit: true }));
+  const handleEdit = async (Id) => {
+    const data = await users.find((d) => d._id === Id);
+    dispatch(setSelectedUser(data));
+    dispatch(toggle({ modalEdit: true }));
   };
 
-  const handleDelete = async (id) => {
-    try {
-      const res = await dispatch(deleteClients(id));
-      dispatch(fetchClients());
-      notifications.show({
-        title: "Success",
-        message: res.message,
-        icon: <Check />,
-        color: "teal",
-      });
-    } catch (err) {
-      notifications.show({
-        title: "Error",
-        message: err.message,
-        color: "red",
-        icon: <X />,
-      });
-    }
+  const handleDelete = async (Id) => {
+    await dispatch(deleteUser(Id));
+    dispatch(fetchUsers());
   };
 
   useEffect(() => {
-    dispatch(fetchClients());
+    dispatch(fetchUsers());
   }, []);
 
-  const rows = clientItems.map((d) => (
+  const rows = userItems.map((d) => (
     <tr key={d.id}>
       <td>
         <Text lineClamp={1} className="table-items firstname select-none">
@@ -97,19 +78,17 @@ const Clients = () => {
         </Text>
       </td>
       <td>
-        <Text lineClamp={1} className="table-items lastname select-none">
+        <Text lineClamp={1} className="table-items lastname">
           {d.lastname}
         </Text>
       </td>
       <td>
-        <Text lineClamp={1} className="table-items email select-none">
-          {d.email}
+        <Text lineClamp={1} className="table-items Email">
+          {d.Email}
         </Text>
       </td>
       <td>
-        <Text lineClamp={1} className="table-items contact">
-          {`+63${d.contact}`}
-        </Text>
+        <Text className="table-items role">{d.Role}</Text>
       </td>
       <td>
         <Text className="table-items status">
@@ -134,7 +113,6 @@ const Clients = () => {
             style={{ cursor: "pointer" }}
             onClick={() => handleEdit(d.id)}
           />
-
           <Popconfirm
             title={"Are you sure to delete this item?"}
             onConfirm={() => handleDelete(d.id)}
@@ -149,7 +127,7 @@ const Clients = () => {
   return (
     <>
       <Head>
-        <title>Clients</title>
+        <title>Users</title>
       </Head>
       <div className="flex flex-col space-y-4 p-8 pb-4">
         <div
@@ -160,16 +138,17 @@ const Clients = () => {
           }}
         >
           <Text fw={500} size={"xl"}>
-            Clients
+            Users
           </Text>
           <Button
-            style={{ alignSelf: "end", height: "30px" }}
+            style={{ width: "100px", alignSelf: "end" }}
             onClick={handleAdd}
           >
-            Add Client
+            Add User
           </Button>
         </div>
-        <div className="clientTable">
+
+        <div className="userTable">
           <ScrollArea
             h={"70vh"}
             scrollbarSize={8}
@@ -184,11 +163,11 @@ const Clients = () => {
                   <th className="lastname">
                     <Text>Lastname</Text>
                   </th>
-                  <th className="email">
+                  <th className="Email">
                     <Text>Email</Text>
                   </th>
-                  <th className="contact">
-                    <Text>Contact</Text>
+                  <th>
+                    <Text>Role</Text>
                   </th>
                   <th className="status">
                     <Text>Status</Text>
@@ -203,15 +182,16 @@ const Clients = () => {
           </ScrollArea>
         </div>
       </div>
-      <AddClientModal />
-      <ViewClientModal />
-      <EditClientModal />
+      <AddUserModal />
+      <EditUserModal />
+      <ViewUserModal />
     </>
   );
 };
 
-export default Clients;
+export default Users;
 
+//use getServerSideProps to check if user is authenticated. If not, redirect to login page
 export async function getServerSideProps(context) {
   const session = await getSession(context);
 

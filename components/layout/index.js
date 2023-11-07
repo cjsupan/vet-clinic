@@ -1,29 +1,25 @@
-import Head from 'next/head';
-import { useState } from 'react';
-import dynamic from 'next/dynamic';
+import Head from "next/head";
+import dynamic from "next/dynamic";
+import { useSession } from "next-auth/react";
 
-const Header = dynamic(()=> import('../layout/Header')); 
-const Sidebar = dynamic(()=> import('../layout/Sidebar'));
-function Layout({children}){
-    const [Open, setOpen] = useState(false);
-    function onClick(){
-      setOpen(!Open);
-    }
-    return (
-      <>
+const Header = dynamic(() => import("../layout/Header"));
+const Sidebar = dynamic(() => import("../layout/Sidebar"));
+
+function Layout({ children }) {
+  const { data: session } = useSession();
+  return (
+    <div className="Body">
       <Head>
-				<title>Vet Clinic</title>
-			</Head>
-      <div className='flex flex-row w-full h-screen bg-bg'>
-        <Sidebar onClick={onClick} Open={Open}></Sidebar>
-        <div className='flex flex-col w-full'>
-        <Header Open={Open}></Header>
-          <div className='p-8 w-full h-full'>
-            {children}
-          </div>
+        <title>Vet Clinic</title>
+      </Head>
+      <div className="flex flex-row w-full h-screen main-container">
+        {session && <Sidebar />}
+        <div className="flex flex-col w-full">
+          <Header />
+          <div className="w-full h-full">{children}</div>
         </div>
       </div>
-      </>  
-    )
+    </div>
+  );
 }
 export default Layout;

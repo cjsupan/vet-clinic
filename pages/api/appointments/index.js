@@ -8,12 +8,13 @@ export default async function handler(req, res) {
 
   switch (method) {
     case "GET":
-      const allClients = await db.collection("Clients").find({}).toArray();
+      const allClients = await db.collection("Appointments").find({}).toArray();
       res.json(allClients);
+
       break;
     case "POST":
       let bodyObject = req.body;
-      let Clients = await db.collection("Clients").insertOne(bodyObject);
+      let Clients = await db.collection("Appointments").insertOne(bodyObject);
       res.json(Clients);
       break;
   }

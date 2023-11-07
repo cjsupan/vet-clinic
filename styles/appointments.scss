@@ -1,0 +1,60 @@
+@import "./mixins";
+@import "./variables";
+
+.app-table {
+  height: 65vh;
+
+  .fc-media-screen {
+    height: 20vh;
+
+    .fc-timeGridWeek-view {
+      height: 65vh;
+    }
+    .fc-dayGridMonth-view {
+      height: 65vh;
+    }
+    .fc-timeGridDay-view {
+      height: 65vh;
+    }
+
+    .fc-col-header-cell {
+      background-color: $color-blue;
+
+      .fc-col-header-cell-cushion {
+        color: white;
+      }
+    }
+
+    .fc-timegrid-event-harness {
+      .fc-event {
+        padding: 2px;
+        &.active {
+          background-color: $color-blue;
+          color: white;
+          border: $color-blue;
+        }
+
+        &.inactive {
+          background-color: $color-red;
+          color: white;
+          border: $color-red;
+        }
+      }
+    }
+
+    .fc-daygrid-event {
+      padding: 3px;
+      &.active {
+        background-color: $color-blue;
+        color: white;
+        border: $color-blue;
+      }
+
+      &.inactive {
+        background-color: $color-red;
+        color: white;
+        border: $color-red;
+      }
+    }
+  }
+}

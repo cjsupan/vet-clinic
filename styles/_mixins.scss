@@ -1,0 +1,42 @@
+@mixin column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin row {
+  display: flex;
+  flex-direction: row;
+}
+
+@mixin module {
+  width: 97%;
+  height: 100vh;
+  padding: 0px 20px;
+}
+
+@mixin Primary-Button {
+  background-color: #3c87f5;
+  border: 0px;
+  padding: 0px 5px;
+  margin: 10px;
+  color: white;
+  box-shadow: $boxShadow;
+}
+
+@mixin rotate($options) {
+  transform: rotate(map-get($options, angle));
+  margin: map-get($options, margin);
+  transition: transform 0.3s ease, margin 0.3s ease;
+}
+
+@mixin sidebarOpen($options) {
+  width: map-get($options, width);
+  transition: width 0.3s map-get($options, trans);
+}
+
+@mixin scaleX($options) {
+  transform-origin: left;
+  transform: scaleX(map-get($options, scale));
+  transition: transform 0.1s map-get($options, trans),
+    transform-origin 0.3s ease;
+}

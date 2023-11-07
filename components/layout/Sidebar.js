@@ -1,46 +1,76 @@
+import { useState, useRef } from "react";
+import { useSession, getSession } from "next-auth/react";
+import { Users, User, Database, Calendar, Grid, Menu } from "react-feather";
+import { Text, Burger } from "@mantine/core";
 import Link from "next/link";
-import {Users, User, Database, Calendar, Grid, Menu} from 'react-feather';
-function Sidebar({onClick, Open}){
+import { useDispatch, useSelector } from "react-redux";
+import { toggle as toggleSidebar } from "../../store/slices/utilitySlice";
+
+const Sidebar = () => {
+  const { data: session, status } = useSession();
+  const dispatch = useDispatch();
+  const sidebarRef = useRef(null);
+
+  const { sideBarOpen } = useSelector((state) => state.utility);
+
   const menuItems = [
     {
-      href: '/',
-      title: 'Dashboard',
-      icon: <Grid className="w-6"/>
+      href: "/",
+      title: "Dashboard",
+      icon: <Grid className="icons" />,
     },
     {
-      href: '/',
-      title: 'Users',
-      icon: <User className="w-6"/>
+      href: "/users",
+      title: "Users",
+      icon: <User className="icons" />,
     },
     {
-      href: '/clients',
-      title: 'Clients',
-      icon: <Users className="w-6"/>
+      href: "/clients",
+      title: "Clients",
+      icon: <Users className="icons" />,
     },
     {
-      href: '/',
-      title: 'Appointment',
-      icon: <Calendar className="w-6"/>
+      href: "/appointments",
+      title: "Appointment",
+      icon: <Calendar className="icons" />,
     },
     {
-      href: '/',
-      title: 'Backup/Restore',
-      icon: <Database className="w-6"/>
+      href: "/",
+      title: "Backup/Restore",
+      icon: <Database className="icons" />,
     },
   ];
-  return (
-    <div className={`flex flex-col bg-white ${Open ? 'w-60' : ' w-16'} duration-300 overflow-hidden shadow-lg pt-8`}>
-      <Menu className={`w-8 mb-4 transform duration-300 self-end mx-4 shadow-lg border-1 border-black ${Open && 'origin-center -rotate-90'}`} onClick={onClick}/>
-        {menuItems.map(({href, title, icon}) => 
 
-          <Link href={href} key={title} className={`h-10 pl-4 hover:bg-gray-200`}>
-            <div className={`absolute flex flex-row pt-2 space-x-2 font-medium `}>
-              {icon}<h1 className={`origin-left transform duration-300 ${!Open && "scale-x-0"}`}>{Open ? title : null}</h1>
-            </div>
+  //if the session.user.Role is not admin, remove the users menu item.
+  if (session && session.user.Role !== "Admin") {
+    menuItems.splice(1, 1);
+  }
+
+  return (
+    <div
+      className={`Sidebar ${sideBarOpen ? "Sidebar-open" : ""} `}
+      ref={sidebarRef}
+    >
+      <Menu
+        className={`Menu-icon ${sideBarOpen ? "Open" : "Close"}`}
+        onClick={() => dispatch(toggleSidebar({ sideBarOpen: !sideBarOpen }))}
+      />
+      <div className="Menu">
+        {menuItems.map((d) => (
+          <Link href={d.href} key={d.title}>
+            <Text className={`Menu-item ${sideBarOpen ? "Open" : "Close"}`}>
+              {d.icon}
+              <Text
+                className={`item ${sideBarOpen ? "item-open" : "item-close"}`}
+              >
+                {d.title}
+              </Text>
+            </Text>
           </Link>
-        )}
+        ))}
+      </div>
     </div>
-  )
-}
+  );
+};
 
 export default Sidebar;
