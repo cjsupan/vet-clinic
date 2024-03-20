@@ -6,7 +6,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { isEqual, sortBy } from "lodash";
 import { Text, ScrollArea, Button, Table } from "@mantine/core";
 import { Popconfirm } from "antd";
-import { Edit, Trash, Eye, CheckCircle, XCircle } from "react-feather";
+import {
+  Edit,
+  Trash,
+  Eye,
+  CheckCircle,
+  XCircle,
+  Check,
+  X,
+} from "react-feather";
 import "antd/dist/antd.css";
 
 import {
@@ -47,7 +55,7 @@ const Clients = () => {
         })
       );
     else return [];
-  }, [JSON.stringify(clients)]);
+  }, [clients]);
 
   const handleAdd = () => {
     dispatch(toggleClients({ modalAdd: true }));
@@ -60,7 +68,7 @@ const Clients = () => {
   };
 
   const handleEdit = (id) => {
-    const selectedClient = clientItems.find((d) => d.id === id);
+    const selectedClient = clients.find((d) => d._id === id);
     dispatch(setSelected(selectedClient));
     dispatch(toggleClients({ modalEdit: true }));
   };
@@ -68,13 +76,16 @@ const Clients = () => {
   const handleDelete = async (id) => {
     try {
       const res = await dispatch(deleteClients(id));
-      dispatch(fetchClients());
-      notifications.show({
-        title: "Success",
-        message: res.message,
-        icon: <Check />,
-        color: "teal",
-      });
+
+      if (res) {
+        dispatch(fetchClients());
+        notifications.show({
+          title: "Success",
+          message: res.message,
+          color: "teal",
+          icon: <Check />,
+        });
+      }
     } catch (err) {
       notifications.show({
         title: "Error",
@@ -87,7 +98,7 @@ const Clients = () => {
 
   useEffect(() => {
     dispatch(fetchClients());
-  }, []);
+  }, [dispatch]);
 
   const rows = clientItems.map((d) => (
     <tr key={d.id}>

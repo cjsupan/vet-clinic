@@ -63,7 +63,7 @@ const Appointments = () => {
         })
       );
     else return [];
-  }, [JSON.stringify(appointments)]);
+  }, [appointments]);
 
   const handleView = (info) => {
     const { event } = info;
@@ -108,7 +108,7 @@ const Appointments = () => {
   useEffect(() => {
     dispatch(fetchAppointments());
     dispatch(fetchClients());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

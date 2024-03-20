@@ -42,7 +42,7 @@ const Users = () => {
         })
       );
     else return [];
-  }, [JSON.stringify(users)]);
+  }, [users]);
 
   const handleAdd = () => {
     dispatch(toggle({ modalAdd: true }));
@@ -68,7 +68,7 @@ const Users = () => {
 
   useEffect(() => {
     dispatch(fetchUsers());
-  }, []);
+  }, [dispatch]);
 
   const rows = userItems.map((d) => (
     <tr key={d.id}>
@@ -199,6 +199,13 @@ export async function getServerSideProps(context) {
     return {
       redirect: {
         destination: "/login",
+        permanent: false,
+      },
+    };
+  } else if (session.user.Role !== "Admin") {
+    return {
+      redirect: {
+        destination: "/error",
         permanent: false,
       },
     };

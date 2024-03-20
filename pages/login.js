@@ -9,7 +9,7 @@ import { Form, Spin } from "antd";
 
 import { Text, Button, Input, Divider, ActionIcon } from "@mantine/core";
 
-const login = () => {
+const Login = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
   const [loading, setLoading] = useState(false);
@@ -113,7 +113,7 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);

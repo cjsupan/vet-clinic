@@ -11,7 +11,7 @@ import {
   create as createClient,
   fetch as fetchClients,
 } from "../../../store/slices/clientSlice";
-import { EyeOff, Eye, Check } from "react-feather";
+import { EyeOff, Eye, Check, X } from "react-feather";
 
 const AddClientModal = () => {
   const dispatch = useDispatch();
@@ -96,7 +96,7 @@ const AddClientModal = () => {
 
   useEffect(() => {
     dispatch(fetchClients());
-  }, [modalAdd]);
+  }, [modalAdd, dispatch]);
 
   const fields = ({ label, errors, register }) => {
     if (label === "Contact Number") {

@@ -1,6 +1,6 @@
 import { getSession } from "next-auth/react";
 
-export default async (req, res) => {
+const CheckSession = async (req, res) => {
   const session = await getSession({ req });
 
   if (session) {
@@ -9,3 +9,5 @@ export default async (req, res) => {
     res.status(401).json({ authenticated: false });
   }
 };
+
+export default CheckSession;

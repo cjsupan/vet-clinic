@@ -50,7 +50,7 @@ const Home = ({ session }) => {
   useEffect(() => {
     dispatch(fetchUsers());
     dispatch(fetchClients());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

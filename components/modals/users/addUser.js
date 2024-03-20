@@ -11,7 +11,7 @@ import {
   create as createUser,
   fetch as fetchUsers,
 } from "../../../store/slices/userSlice";
-import { EyeOff, Eye, Check } from "react-feather";
+import { EyeOff, Eye, Check, X } from "react-feather";
 
 const AddUserModal = () => {
   const dispatch = useDispatch();
@@ -104,7 +104,7 @@ const AddUserModal = () => {
     //check if email is already taken
     const isEmailTaken = users.find((user) => user.Email === value);
     if (isEmailTaken) {
-      return "Email already taken";
+      return "Email already exist";
     }
 
     return true;
@@ -112,11 +112,11 @@ const AddUserModal = () => {
 
   useEffect(() => {
     setValue("Role", "User");
-  }, [modalAdd]);
+  }, [modalAdd, setValue]);
 
   useEffect(() => {
     dispatch(fetchUsers());
-  }, [modalAdd]);
+  }, [modalAdd, dispatch]);
 
   const fields = ({ label, errors, register, onChange }) => {
     if (label === "Role") {

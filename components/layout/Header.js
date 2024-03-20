@@ -76,13 +76,8 @@ const Header = () => {
           }}
           trigger={["click"]}
         >
-          <div className="profilePicture">
-            <img
-              src={"/profile.svg"}
-              alt="profile picture"
-              width="100%"
-              height="100%"
-            />
+          <div className="profilePicture relative w-5 h-5">
+            <Image src={"/profile.svg"} alt="profile picture" fill />
           </div>
         </Dropdown>
       </div>
