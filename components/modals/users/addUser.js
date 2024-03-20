@@ -104,7 +104,7 @@ const AddUserModal = () => {
     //check if email is already taken
     const isEmailTaken = users.find((user) => user.Email === value);
     if (isEmailTaken) {
-      return "Email already taken";
+      return "Email already exist";
     }
 
     return true;

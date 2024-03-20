@@ -60,7 +60,7 @@ const Clients = () => {
   };
 
   const handleEdit = (id) => {
-    const selectedClient = clientItems.find((d) => d.id === id);
+    const selectedClient = clients.find((d) => d._id === id);
     dispatch(setSelected(selectedClient));
     dispatch(toggleClients({ modalEdit: true }));
   };
@@ -68,13 +68,16 @@ const Clients = () => {
   const handleDelete = async (id) => {
     try {
       const res = await dispatch(deleteClients(id));
-      dispatch(fetchClients());
-      notifications.show({
-        title: "Success",
-        message: res.message,
-        icon: <Check />,
-        color: "teal",
-      });
+
+      if (res) {
+        dispatch(fetchClients());
+        notifications.show({
+          title: "Success",
+          message: res.message,
+          color: "teal",
+          icon: <Check />,
+        });
+      }
     } catch (err) {
       notifications.show({
         title: "Error",

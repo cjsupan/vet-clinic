@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Modal, Form, message } from "antd";
 import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
-import { isEqual, sortBy } from "lodash";
+import { isEqual, set, sortBy } from "lodash";
 import { Input, Space, Text, Button, Switch, ScrollArea } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import moment from "moment";
@@ -12,6 +12,7 @@ import {
   fetch as fetchClients,
 } from "../../../store/slices/clientSlice";
 import { EyeOff, Eye, Check, X } from "react-feather";
+import { bool } from "yup";
 
 const EditClientModal = () => {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ const EditClientModal = () => {
     Email: "",
     Address: "",
     Contact: "",
-    Active: true,
+    Active: "",
   };
   const {
     register,
@@ -43,7 +44,7 @@ const EditClientModal = () => {
   const onSubmit = async (data) => {
     try {
       const res = await dispatch(
-        updatedClient({ Id: selectedClient.id, data })
+        updatedClient({ Id: selectedClient._id, data })
       );
 
       dispatch(fetchClients());
@@ -88,28 +89,18 @@ const EditClientModal = () => {
       ) {
         return "Invalid email address";
       }
-    }
 
-    //check if email if the email is already taken.
-    //if its already taken, check the id if it is the same with the selected client id
-    //if it is the same return true
-    //else return false
-    const isEmailTaken = clients.some((client) => client.Email === val);
-    if (isEmailTaken) {
-      if (selectedUser.Email === val) {
-        return true;
-      }
-      return "Email is already taken";
+      return true;
     }
   };
 
   useEffect(() => {
-    setValue("Firstname", selectedClient.firstname);
-    setValue("Lastname", selectedClient.lastname);
-    setValue("Email", selectedClient.email);
-    setValue("Address", selectedClient.address);
-    setValue("Contact", selectedClient.contact);
-    setValue("Active", selectedClient.status);
+    setValue("Firstname", selectedClient.Firstname);
+    setValue("Lastname", selectedClient.Lastname);
+    setValue("Email", selectedClient.Email);
+    setValue("Address", selectedClient.Address);
+    setValue("Contact", selectedClient.Contact);
+    setValue("Active", selectedClient.Active);
   }, [selectedClient]);
 
   useEffect(() => {
@@ -153,7 +144,7 @@ const EditClientModal = () => {
             onLabel="Yes"
             offLabel="No"
             size="md"
-            defaultChecked={true}
+            defaultChecked={getValues("Active")}
             {...register}
           />
           <Space h="lg" />
@@ -230,6 +221,7 @@ const EditClientModal = () => {
                 register: {
                   ...register("Email", {
                     required: "Email is a required field",
+                    validate: (val) => validateEmail(val),
                   }),
                 },
                 errors: errors.Email?.message,
@@ -258,6 +250,7 @@ const EditClientModal = () => {
                 register: {
                   ...register("Active"),
                 },
+
                 errors: errors.Active?.message,
               })}
             </ScrollArea>

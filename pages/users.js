@@ -202,6 +202,13 @@ export async function getServerSideProps(context) {
         permanent: false,
       },
     };
+  } else if (session.user.Role !== "Admin") {
+    return {
+      redirect: {
+        destination: "/error",
+        permanent: false,
+      },
+    };
   }
   return {
     props: { session },

@@ -6,10 +6,12 @@ const ErrorPage = ({ statusCode }) => {
     <div className="errorPage">
       <div className="error-container">
         <Image src="/404.svg" alt="error" width={500} height={500} />
-        <Text fz="xl" fw={500} color="white">
+        <Text fz="xl" fw={500} color="black">
           Page not found
         </Text>
-        <Button onClick={() => window.history.back()}>Go Back</Button>
+        <Button variant="outline" onClick={() => window.history.back()}>
+          Go Back
+        </Button>
       </div>
     </div>
   );
