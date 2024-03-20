@@ -127,11 +127,11 @@ const EditUserModal = () => {
       setValue("Role", selectedUser.Role);
       setValue("Password", selectedUser.Password);
     }
-  }, [modalEdit]);
+  }, [modalEdit, setValue, selectedUser]);
 
   useEffect(() => {
     dispatch(fetchUsers());
-  }, [modalEdit]);
+  }, [modalEdit, dispatch]);
 
   const fields = ({ label, errors, register, onChange }) => {
     if (label === "Role") {

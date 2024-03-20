@@ -6,7 +6,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { isEqual, sortBy } from "lodash";
 import { Text, ScrollArea, Button, Table } from "@mantine/core";
 import { Popconfirm } from "antd";
-import { Edit, Trash, Eye, CheckCircle, XCircle } from "react-feather";
+import {
+  Edit,
+  Trash,
+  Eye,
+  CheckCircle,
+  XCircle,
+  Check,
+  X,
+} from "react-feather";
 import "antd/dist/antd.css";
 
 import {
@@ -47,7 +55,7 @@ const Clients = () => {
         })
       );
     else return [];
-  }, [JSON.stringify(clients)]);
+  }, [clients]);
 
   const handleAdd = () => {
     dispatch(toggleClients({ modalAdd: true }));
@@ -90,7 +98,7 @@ const Clients = () => {
 
   useEffect(() => {
     dispatch(fetchClients());
-  }, []);
+  }, [dispatch]);
 
   const rows = clientItems.map((d) => (
     <tr key={d.id}>

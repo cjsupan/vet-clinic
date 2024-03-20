@@ -1,19 +1,12 @@
 import { useEffect, useState } from "react";
-import { Modal, DatePicker, TimePicker } from "antd";
-import { useForm } from "react-hook-form";
+import { Modal } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { isEqual } from "lodash";
-import { Input, Space, Text, Button, Switch } from "@mantine/core";
-import { notifications } from "@mantine/notifications";
-import { Check, X } from "react-feather";
+import { Input, Space, Text, Button } from "@mantine/core";
+
 import moment from "moment";
 
-import {
-  toggle as toggleAppointments,
-  update as updateAppointment,
-  deleted as deleteAppointment,
-  setSelected,
-} from "../../../store/slices/appointmentSlice";
+import { toggle as toggleAppointments } from "../../../store/slices/appointmentSlice";
 import EditAppointmentModal from "./editAppointment";
 
 const ViewAppointmentModal = () => {
@@ -31,7 +24,7 @@ const ViewAppointmentModal = () => {
 
   useEffect(() => {
     setAppointment(selectedAppointment);
-  }, [modalView]);
+  }, [modalView, selectedAppointment]);
 
   const info = ({ label, value }) => {
     if (label === "Date") {

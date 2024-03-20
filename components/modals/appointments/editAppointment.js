@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Modal, DatePicker, TimePicker, Form } from "antd";
 import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
-import { isEqual } from "lodash";
+import { isEqual, set } from "lodash";
 import { Input, Space, Text, Button, Switch } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { Check, X } from "react-feather";
@@ -231,11 +231,11 @@ const EditAppointmentModal = () => {
       setValue("status", selectedAppointment.status);
       setValue("time", moment(selectedAppointment.date).format("h:mm a"));
     }
-  }, [selectedAppointment]);
+  }, [selectedAppointment, setValue]);
 
   useEffect(() => {
     dispatch(fetchAppointments());
-  }, []);
+  }, [dispatch]);
 
   return (
     <Modal

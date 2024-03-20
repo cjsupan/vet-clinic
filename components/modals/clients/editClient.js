@@ -101,11 +101,11 @@ const EditClientModal = () => {
     setValue("Address", selectedClient.Address);
     setValue("Contact", selectedClient.Contact);
     setValue("Active", selectedClient.Active);
-  }, [selectedClient]);
+  }, [selectedClient, setValue]);
 
   useEffect(() => {
     dispatch(fetchClients());
-  }, [modalEdit]);
+  }, [modalEdit, dispatch]);
 
   const fields = ({ label, errors, register }) => {
     if (label === "Contact Number") {
