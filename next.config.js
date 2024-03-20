@@ -14,7 +14,7 @@ const nextConfig = {
     CUSTOM_ENV,
     API_URL: {
       development: "localhost:3000",
-      production: "vet-clinic-61pvcuykl-cjsupans-projects.vercel.app",
+      production: "https://vet-clinic-mrl82q6tr-cjsupans-projects.vercel.app",
     }[CUSTOM_ENV],
   },
 };
