@@ -10,13 +10,7 @@ console.log(
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  publicRuntimeConfig: {
-    CUSTOM_ENV,
-    API_URL: {
-      development: "http://localhost:3000",
-      production: "https://vet-clinic-swart.vercel.app",
-    }[CUSTOM_ENV],
-  },
+  publicRuntimeConfig: {},
 };
 
 module.exports = nextConfig;

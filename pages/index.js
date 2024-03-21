@@ -8,6 +8,7 @@ import ErrorPage from "next/error";
 import { useSession, getSession } from "next-auth/react";
 import { fetch as fetchUsers } from "../store/slices/userSlice";
 import { fetch as fetchClients } from "../store/slices/clientSlice";
+import { fetch as fetchAppointments } from "../store/slices/appointmentSlice";
 
 const Home = ({ session }) => {
   const dispatch = useDispatch();
@@ -18,6 +19,11 @@ const Home = ({ session }) => {
   );
   const { data: clients, loading: clientsLoading } = useSelector(
     (state) => state.client,
+    isEqual
+  );
+
+  const { data: appointments, loading: appointmentsLoading } = useSelector(
+    (state) => state.appointment,
     isEqual
   );
 
@@ -37,7 +43,7 @@ const Home = ({ session }) => {
     {
       title: "Appointments",
       href: "/appointments",
-      value: 5,
+      value: appointments ? appointments.length : 0,
       color: "bg-amber-400",
     },
   ];
@@ -50,6 +56,7 @@ const Home = ({ session }) => {
   useEffect(() => {
     dispatch(fetchUsers());
     dispatch(fetchClients());
+    dispatch(fetchAppointments());
   }, [dispatch]);
 
   return (
