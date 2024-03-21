@@ -113,7 +113,7 @@ export const {
 export const fetch = () => async (dispatch) => {
   try {
     dispatch(fetchStart());
-    const response = await axios.get(`${process.env.NEXT_API_URL}/api/users`);
+    const response = await axios.get(`/api/users`);
     dispatch(fetchSuccess(response.data));
     return response;
   } catch (error) {
