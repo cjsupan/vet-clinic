@@ -1,8 +1,8 @@
-const CUSTOM_ENV = process.env.CUSTOM_ENV || "production";
+const CUSTOM_ENV = process.env.NODE_ENV || "production";
 
 console.log(
   "=======================",
-  process.env.CUSTOM_ENV,
+  process.env.NODE_ENV,
   CUSTOM_ENV,
   "======================"
 );
@@ -14,7 +14,7 @@ const nextConfig = {
     CUSTOM_ENV,
     API_URL: {
       development: "http://localhost:3000",
-      production: "https://vet-clinic-mrl82q6tr-cjsupans-projects.vercel.app",
+      production: "vet-clinic-emeg069lu-cjsupans-projects.vercel.app",
     }[CUSTOM_ENV],
   },
 };
