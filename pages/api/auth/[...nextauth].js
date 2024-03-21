@@ -20,8 +20,9 @@ export const authOptions = {
           Email: credentials.Email,
           Password: credentials.Password,
         });
-
+        console.log("User", user);
         if (!user) {
+          console.log("User not found");
           return null;
         }
 
