@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useSession, getSession } from "next-auth/react";
 import { Users, User, Database, Calendar, Grid, Menu } from "react-feather";
 import { Text, Burger } from "@mantine/core";
@@ -45,6 +45,15 @@ const Sidebar = () => {
   if (session && session.user.Role !== "Admin") {
     menuItems.splice(1, 1);
   }
+
+  useEffect(() => {
+    //if session is not found, return null
+    if (!session) return null;
+    //if the user is not admin, remove the users menu item
+    if (session && session.user.Role !== "Admin") {
+      menuItems.splice(1, 1);
+    }
+  }, [session]);
 
   return (
     <div
