@@ -2,8 +2,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import moment from "moment";
-import { publicRuntimeConfig } from "../../next.config";
-const { API_URL } = publicRuntimeConfig;
 
 const initialState = {
   data: null,
@@ -113,7 +111,7 @@ export const {
 export const fetch = () => async (dispatch) => {
   try {
     dispatch(fetchStart());
-    const response = await axios.get(`${API_URL}/api/clients`);
+    const response = await axios.get(`/api/clients`);
     dispatch(fetchSuccess(response.data));
     return response;
   } catch (error) {
@@ -128,7 +126,7 @@ export const create = (payload) => async (dispatch) => {
   try {
     payload.Date_created = date;
     payload.Date_updated = date;
-    const response = await axios.post(`${API_URL}/api/clients`, payload);
+    const response = await axios.post(`/api/clients`, payload);
     payload._id = response.data.insertedId;
 
     dispatch(createSuccess(payload));
@@ -163,10 +161,7 @@ export const update = (data) => async (dispatch) => {
   const date = moment().format("lll");
   try {
     data.data.Date_updated = date;
-    const response = await axios.patch(
-      `${API_URL}/api/clients/${data.Id}`,
-      data.data
-    );
+    const response = await axios.patch(`/api/clients/${data.Id}`, data.data);
     dispatch(updateSuccess());
     response.message = "Successfully Updated!";
     return response;
@@ -180,7 +175,7 @@ export const update = (data) => async (dispatch) => {
 export const deleted = (clientId) => async (dispatch) => {
   dispatch(deleteStart());
   try {
-    const response = await axios.delete(`${API_URL}/api/clients/${clientId}`);
+    const response = await axios.delete(`/api/clients/${clientId}`);
     dispatch(deleteSuccess(clientId));
     response.message = "Successfully Deleted!";
     return response;
