@@ -2,8 +2,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import moment from "moment";
-import { publicRuntimeConfig } from "../../next.config";
-const { API_URL } = publicRuntimeConfig;
 
 const initialState = {
   data: null,
@@ -115,7 +113,7 @@ export const {
 export const fetch = () => async (dispatch) => {
   try {
     dispatch(fetchStart());
-    const response = await axios.get(`${API_URL}/api/appointments`);
+    const response = await axios.get(`/api/appointments`);
 
     dispatch(fetchSuccess(response.data));
     return response;
@@ -132,7 +130,7 @@ export const create = (payload) => async (dispatch) => {
     payload.Date_created = date;
     payload.Date_updated = date;
 
-    const response = await axios.post(`${API_URL}/api/appointments`, payload);
+    const response = await axios.post(`/api/appointments`, payload);
     payload._id = response.data.insertedId;
 
     dispatch(createSuccess(payload));
@@ -169,7 +167,7 @@ export const update = (data) => async (dispatch) => {
     data.data.date_updated = date;
 
     const response = await axios.patch(
-      `${API_URL}/api/appointments/${data.Id}`,
+      `/api/appointments/${data.Id}`,
       data.data
     );
     dispatch(updateSuccess());
