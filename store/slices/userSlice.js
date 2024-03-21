@@ -128,10 +128,7 @@ export const create = (payload) => async (dispatch) => {
   try {
     payload.Date_created = date;
     payload.Date_updated = date;
-    const response = await axios.post(
-      `${process.env.NEXT_API_URL}/api/users`,
-      payload
-    );
+    const response = await axios.post(`/api/users`, payload);
     payload._id = response.data.insertedId;
 
     dispatch(createSuccess(payload));
@@ -166,10 +163,7 @@ export const update = (data) => async (dispatch) => {
   const date = moment().format("lll");
   try {
     data.data.Date_updated = date;
-    const response = await axios.patch(
-      `${process.env.NEXT_API_URL}/api/users/${data.Id}`,
-      data.data
-    );
+    const response = await axios.patch(`/api/users/${data.Id}`, data.data);
 
     dispatch(updateSuccess(response.data));
     response.message = "Successfully Updated!";
@@ -184,9 +178,7 @@ export const update = (data) => async (dispatch) => {
 export const deleted = (userId) => async (dispatch) => {
   dispatch(deleteStart());
   try {
-    const res = await axios.delete(
-      `${process.env.NEXT_API_URL}/api/users/${userId}`
-    );
+    const res = await axios.delete(`/api/users/${userId}`);
     dispatch(deleteSuccess(userId));
     return (res.message = "Successfully Deleted!");
   } catch (error) {
