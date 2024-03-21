@@ -47,13 +47,14 @@ const Sidebar = () => {
   }
 
   useEffect(() => {
-    //if session is not found, return null
-    if (!session) return null;
-    //if the user is not admin, remove the users menu item
     if (session && session.user.Role !== "Admin") {
       menuItems.splice(1, 1);
     }
   }, [session]);
+
+  if (status === "unauthenticated") {
+    return null;
+  }
 
   return (
     <div
