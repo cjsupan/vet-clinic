@@ -55,6 +55,12 @@ const Login = () => {
     setLoading(false);
   };
 
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/");
+    }
+  }, [status]);
+
   return (
     <>
       <Head>
