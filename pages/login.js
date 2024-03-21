@@ -46,6 +46,8 @@ const Login = () => {
           type: "manual",
           message: "Email or Password is incorrect",
         });
+      } else {
+        router.push("/");
       }
     } catch (error) {
       console.log(error);
