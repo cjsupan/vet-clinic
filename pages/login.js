@@ -41,13 +41,13 @@ const Login = () => {
         Email,
         Password,
       });
+
+      console.log("loginRes", loginRes);
       if (loginRes.error) {
         setError("Password", {
           type: "manual",
           message: "Email or Password is incorrect",
         });
-      } else {
-        router.push("/");
       }
     } catch (error) {
       console.log(error);
