@@ -10,6 +10,7 @@ import { Form, Spin } from "antd";
 import { Text, Button, Input, Divider, ActionIcon } from "@mantine/core";
 
 const Login = () => {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   const defaultValues = {
@@ -40,7 +41,6 @@ const Login = () => {
         Password,
       });
 
-      console.log("loginRes", loginRes);
       if (loginRes.error) {
         setError("Password", {
           type: "manual",
@@ -117,7 +117,7 @@ export default Login;
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
-  console.log("session", session);
+
   if (session) {
     return {
       redirect: {
