@@ -13,7 +13,7 @@ const nextConfig = {
   publicRuntimeConfig: {
     CUSTOM_ENV,
     API_URL: {
-      development: "localhost:3000",
+      development: "http://localhost:3000",
       production: "https://vet-clinic-mrl82q6tr-cjsupans-projects.vercel.app",
     }[CUSTOM_ENV],
   },
