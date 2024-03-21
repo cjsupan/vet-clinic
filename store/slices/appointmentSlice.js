@@ -113,7 +113,7 @@ export const {
 export const fetch = () => async (dispatch) => {
   try {
     dispatch(fetchStart());
-    const response = await axios.get("http://localhost:3000/api/appointments");
+    const response = await axios.get(`${API_URL}/api/appointments`);
 
     dispatch(fetchSuccess(response.data));
     return response;
@@ -130,10 +130,7 @@ export const create = (payload) => async (dispatch) => {
     payload.Date_created = date;
     payload.Date_updated = date;
 
-    const response = await axios.post(
-      "http://localhost:3000/api/appointments",
-      payload
-    );
+    const response = await axios.post(`${API_URL}/api/appointments`, payload);
     payload._id = response.data.insertedId;
 
     dispatch(createSuccess(payload));
@@ -170,7 +167,7 @@ export const update = (data) => async (dispatch) => {
     data.data.date_updated = date;
 
     const response = await axios.patch(
-      `http://localhost:3000/api/appointments/${data.Id}`,
+      `${API_URL}/api/appointments/${data.Id}`,
       data.data
     );
     dispatch(updateSuccess());
@@ -187,7 +184,7 @@ export const deleted = (appointmentId) => async (dispatch) => {
   dispatch(deleteStart());
   try {
     const response = await axios.delete(
-      `http://localhost:3000/api/appointments/${appointmentId}`
+      `${API_URL}/api/appointments/${appointmentId}`
     );
     dispatch(deleteSuccess(appointmentId));
     response.message = "Successfully Deleted!";
