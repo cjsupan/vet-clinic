@@ -60,6 +60,10 @@ const Header = () => {
     },
   ];
 
+  if (!session || status === "unauthenticated") {
+    return null;
+  }
+
   return (
     <div className="Header">
       <div className="profileBox">

@@ -52,7 +52,7 @@ const Sidebar = () => {
     }
   }, [session]);
 
-  if (status === "unauthenticated") {
+  if (!session || status === "unauthenticated") {
     return null;
   }
 

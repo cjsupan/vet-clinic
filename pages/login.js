@@ -10,8 +10,6 @@ import { Form, Spin } from "antd";
 import { Text, Button, Input, Divider, ActionIcon } from "@mantine/core";
 
 const Login = () => {
-  const router = useRouter();
-  const { data: session, status } = useSession();
   const [loading, setLoading] = useState(false);
 
   const defaultValues = {
@@ -54,13 +52,6 @@ const Login = () => {
     }
     setLoading(false);
   };
-
-  useEffect(() => {
-    if (status === "authenticated") {
-      console.log("authenticated");
-      router.push("/");
-    }
-  }, [status]);
 
   return (
     <>
